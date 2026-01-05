@@ -1,0 +1,12 @@
+.landing-root {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.entry-btn {
+    cursor: none;
+}
