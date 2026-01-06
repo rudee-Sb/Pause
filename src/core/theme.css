@@ -1,8 +1,9 @@
 :root {
     /* colors */
     --bg: #f2f3f1;
-    --fg: #0b0c0b;
-    --muted: #a1a6b0c3;
+    --fg: #222522;
+    --muted-lt: #a1a6b0ce;
+    --muted-dk: #4b4d52;
     --red: #df3d24;
     --yellow: #eee723;
     --blue: #013159;
@@ -10,9 +11,13 @@
     --green: #3bb95c;
 
     /* Type Scale */
-    --text-lg: 1.75rem;
+    --text-lg: 1.35rem;
     --text-md: 1rem;
     --text-sm: 0.75rem;
+
+    /* Fonts */
+    --font-main: "Bebas Nueu", sans-serif;
+    --font-sec: "Inter", sans-serif;
 
     /* Space */
     --space-1: 8px;
@@ -24,4 +29,24 @@
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
     --fast: 150ms;
     --slow: 900ms;
+}
+
+* {
+    cursor: none;
+}
+
+#cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--fg);
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition:
+        background-color 0.3s ease,
+        transform 0.15s ease;
 }
