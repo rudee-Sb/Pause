@@ -12,6 +12,7 @@ export default function Gate({ onComplete }) {
         if (completedRef.current) return;
 
         completedRef.current = true;
+        showCursor();
         onComplete?.();
     };
 

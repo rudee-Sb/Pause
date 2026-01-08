@@ -31,9 +31,7 @@
     --slow: 900ms;
 }
 
-* {
-    cursor: none;
-}
+
 
 #cursor-dot {
     position: fixed;
