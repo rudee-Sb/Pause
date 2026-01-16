@@ -1,71 +1,66 @@
-import { useState, useEffect, useRef } from "react"
-import Box from "../components/Box"
-import "./lab.css"
-import PauseSentinel from "../components/sentinels/PauseSentinel";
-import SilenceSentinel from "../components/sentinels/SilenceSentinel";
+import { useState, useEffect } from "react"
+import Squares from "../components/backgrounds/squares/Squares";
+import "./lab.css";
 
 export default function LabHome({ onExit }) {
+    const [visible, setVisible] = useState(true);
 
-    const [activeBox, setActiveBox] = useState(null);
+    useEffect(() => {
+        let lastScrollY = window.scrollY;
 
-    const enterBox = (id) => {
-        setActiveBox(id);
-    }
+        const onScroll = () => {
+            const current = window.scrollY;
 
-    const exitBox = () => {
-        setActiveBox(null);
-    }
+            if (current <= 8) {
+                setVisible(true);
+            } else if (current > lastScrollY) {
+                setVisible(false);
+            }
+
+            lastScrollY = current;
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => { window.removeEventListener("scroll", onScroll) };
+    }, [])
 
     return (
         <>
             <div className="home-root">
-                <div className="experiments-wrapper">
-                    {/* pause experiment box */}
-                    <div className="container">
-                        <Box
-                            id="pause"
-                            active={activeBox === "pause"}
-                            onEnter={() => enterBox("pause")}
-                            onExit={exitBox}
-                        >
-                            <PauseSentinel />
-
-                        </Box>
+                <div style={{ width: '100%', height: '100%', position: 'fixed', inset: '0', pointerEvents: 'none', overflow: 'hidden', zIndex: '0' }}>
+                    <Squares
+                        speed={0.1}
+                        squareSize={43}
+                        direction="down"
+                        borderColor="#b1afaf57"
+                        hoverFillColor="#ccd0c2"
+                    />
+                </div>
+                <div className={`navbar ${visible ? "" : "navbar-hidden"}`}>
+                    <div className="logo">
+                        <h3>LAB HOME</h3>
                     </div>
 
-
-                    {/* silence experiment box */}
-                    <div className="container">
-                        <Box
-                            id="silence"
-                            active={activeBox === "silence"}
-                            onEnter={() => enterBox("silence")}
-                            onExit={exitBox}
-                        >
-                            <SilenceSentinel />
-                        </Box>
-                    </div>
-
-                    {/* single screen experiment box */}
-                    <div className="container">
-                        <Box
-                            id="single-screen"
-                            active={activeBox === "single-screen"}
-                            onEnter={() => enterBox("single-screen")}
-                            onExit={exitBox}
-                        ></Box>
-                    </div>
-
-                    {/* negative space experiment box */}
-                    <div className="container">
-                        <Box
-                            id="negative-space"
-                            active={activeBox === "negative-space"}
-                            onEnter={() => enterBox("negative-space")}
-                            onExit={exitBox}
-                        ></Box>
+                    <div className="contact">
+                        <p><a href="">[ CONTACT ]</a></p>
                     </div>
                 </div>
+
+                    <div className="home-root-grid">
+                        <div className="exp-container" id="pause-exp">
+                            <h3>pause</h3>
+                        </div>
+                        <div className="exp-container" id="silence-exp">
+                            <h3>silence</h3>
+                        </div>
+                        <div className="exp-container" id="single-exp">
+                            <h3>single</h3>
+                        </div>
+                        <div className="exp-container" id="neg-exp">
+                            <h3>negative space</h3>
+                        </div>
+                    </div>
+
             </div>
         </>
     )
